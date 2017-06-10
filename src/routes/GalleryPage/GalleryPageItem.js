@@ -6,8 +6,10 @@ import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import Grid from 'material-ui/Grid'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
+import Icon from 'material-ui/Icon'
 import AlbumBadge from '../../styled/AlbumBadge'
 import CardCover from '../../styled/CardCover'
+import Stats from '../../styled/Stats'
 
 export default class GalleryPageItem extends Component {
   static propTypes = {
@@ -45,6 +47,10 @@ export default class GalleryPageItem extends Component {
             <Button compact primary style={{ marginLeft: 4 }} onClick={this.handleClick}>
               See More
             </Button>
+            <Stats style={{ margin: '0 6px 0 auto' }}>
+              <Icon>remove_red_eye</Icon>{item.views}
+              <Icon>grade</Icon>{item.points}
+            </Stats>
           </CardActions>
         </Card>
       </Grid>
