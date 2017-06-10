@@ -12,11 +12,26 @@ import StyledComment from '../styled/Comment'
 
 export default class Comment extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    expandAll: PropTypes.bool.isRequired
   }
 
   state = {
     showChildComments: false
+  }
+
+  componentWillMount () {
+    this.setState({ showChildComments: this.props.expandAll })
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.expandAll && !this.props.expandAll) {
+      this.setState({ showChildComments: true })
+    }
+
+    if (!nextProps.expandAll && this.props.expandAll) {
+      this.setState({ showChildComments: false })
+    }
   }
 
   toggleChildComments = () => {
@@ -42,11 +57,14 @@ export default class Comment extends Component {
               onClick={this.toggleChildComments}
               style={{ position: 'absolute', top: 0, right: 0 }}
             >
-              <Icon>{showChildComments ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}</Icon>
+              <Icon>{showChildComments ? 'expand_less' : 'expand_more'}</Icon>
             </IconButton>}
           <Typography className="message">{comment}</Typography>
         </Paper>
-        {showChildComments && children.map(child => <Comment key={child.id} data={child} />)}
+        {showChildComments &&
+          children.map(child =>
+            <Comment key={child.id} data={child} expandAll={this.props.expandAll} />
+          )}
       </StyledComment>
     )
   }

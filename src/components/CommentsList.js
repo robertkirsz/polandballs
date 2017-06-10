@@ -8,6 +8,8 @@ import { galleryItemActions } from '../reducers/galleryItemReducer'
 import Comment from './Comment'
 // Layout
 import { CircularProgress } from 'material-ui/Progress'
+import Typography from 'material-ui/Typography'
+import Button from 'material-ui/Button'
 import Div from '../styled/Div'
 
 const mapStateToProps = ({ galleryItem }) => ({ galleryItem })
@@ -23,8 +25,16 @@ class CommentsList extends Component {
     galleryItemActions: PropTypes.object.isRequired
   }
 
+  state = {
+    expandAll: false
+  }
+
   componentWillMount () {
     this.props.galleryItemActions.fetchComments(this.props.id)
+  }
+
+  toggleExpandAll = () => {
+    this.setState({ expandAll: !this.state.expandAll })
   }
 
   getNumberOfComments = comments => {
@@ -46,6 +56,8 @@ class CommentsList extends Component {
 
   render () {
     const { commentsLoading, commentsLoaded, comments } = this.props.galleryItem
+    const { expandAll } = this.state
+    const hasCommentReplies = !!comments.find(comment => comment.children.length > 0)
 
     return (
       <Div flex column>
@@ -55,8 +67,18 @@ class CommentsList extends Component {
           />}
         {commentsLoaded &&
           <Div flex column>
-            <h3>{this.getNumberOfComments(this.props.galleryItem.comments)}</h3>
-            {comments.map(comment => <Comment key={comment.id} data={comment} />)}
+            <Div flex justifyContent="space-between" alignItems="center" style={{ marginTop: 16 }}>
+              <Typography type="title">
+                {this.getNumberOfComments(comments)}
+              </Typography>
+              {hasCommentReplies &&
+                <Button onClick={this.toggleExpandAll}>
+                  {expandAll ? 'Collapse all' : 'Expand all'}
+                </Button>}
+            </Div>
+            {comments.map(comment =>
+              <Comment key={comment.id} data={comment} expandAll={expandAll} />
+            )}
           </Div>}
       </Div>
     )
