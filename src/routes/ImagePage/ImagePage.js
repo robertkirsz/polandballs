@@ -8,6 +8,7 @@ import { galleryItemActions } from '../../reducers/galleryItemReducer'
 // Components
 import ImagePageItem from './ImagePageItem'
 import Tags from '../../components/Tags'
+import SocialButtons from '../../components/SocialButtons'
 // Layout
 import { CircularProgress } from 'material-ui/Progress'
 import Paper from 'material-ui/Paper'
@@ -61,6 +62,7 @@ class ImagePage extends Component {
                   <Icon>remove_red_eye</Icon>{item.views}
                   <Icon>grade</Icon>{item.points}
                 </Stats>
+                <SocialButtons />
                 <Tags tags={item.tags} />
               </Div>
             </Paper>
