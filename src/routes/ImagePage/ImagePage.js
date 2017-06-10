@@ -9,6 +9,7 @@ import { galleryItemActions } from '../../reducers/galleryItemReducer'
 import ImagePageItem from './ImagePageItem'
 import Tags from '../../components/Tags'
 import SocialButtons from '../../components/SocialButtons'
+import CommentsList from '../../components/CommentsList'
 // Layout
 import { CircularProgress } from 'material-ui/Progress'
 import Paper from 'material-ui/Paper'
@@ -66,6 +67,7 @@ class ImagePage extends Component {
                 <Tags tags={item.tags} />
               </Div>
             </Paper>
+            <CommentsList id={this.props.match.params.id} />
           </Div>}
       </StyledImagePage>
     )
