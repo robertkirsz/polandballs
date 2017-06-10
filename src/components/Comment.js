@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 // Layout
 import Paper from 'material-ui/Paper'
+import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Icon from 'material-ui/Icon'
 import List from '../styled/List'
@@ -14,8 +15,17 @@ export default class Comment extends Component {
     data: PropTypes.object.isRequired
   }
 
+  state = {
+    showChildComments: false
+  }
+
+  toggleChildComments = () => {
+    this.setState({ showChildComments: !this.state.showChildComments })
+  }
+
   render () {
     const { author, datetime, points, comment, children } = this.props.data
+    const { showChildComments } = this.state
 
     return (
       <StyledComment>
@@ -27,9 +37,16 @@ export default class Comment extends Component {
               <Icon>grade</Icon>{points}
             </Stats>
           </List>
+          {children.length > 0 &&
+            <IconButton
+              onClick={this.toggleChildComments}
+              style={{ position: 'absolute', top: 0, right: 0 }}
+            >
+              <Icon>{showChildComments ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}</Icon>
+            </IconButton>}
           <Typography className="message">{comment}</Typography>
         </Paper>
-        {(children || []).map(child => <Comment key={child.id} data={child} />)}
+        {showChildComments && children.map(child => <Comment key={child.id} data={child} />)}
       </StyledComment>
     )
   }
