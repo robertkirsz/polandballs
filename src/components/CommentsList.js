@@ -27,17 +27,35 @@ class CommentsList extends Component {
     this.props.galleryItemActions.fetchComments(this.props.id)
   }
 
+  getNumberOfComments = comments => {
+    let counter = 0
+
+    const count = array => {
+      array.forEach(item => {
+        counter += 1
+        count(item.children)
+      })
+    }
+
+    count(comments)
+
+    if (counter === 0) return 'No comments'
+
+    return `${counter} ${counter > 1 ? 'comments' : 'comment'}`
+  }
+
   render () {
     const { commentsLoading, commentsLoaded, comments } = this.props.galleryItem
 
     return (
-      <Div flex column style={{ marginTop: 24 }}>
+      <Div flex column>
         {commentsLoading &&
           <CircularProgress
             style={{ alignSelf: 'center', width: 40, height: 40, marginTop: 24 }}
           />}
         {commentsLoaded &&
           <Div flex column>
+            <h3>{this.getNumberOfComments(this.props.galleryItem.comments)}</h3>
             {comments.map(comment => <Comment key={comment.id} data={comment} />)}
           </Div>}
       </Div>
