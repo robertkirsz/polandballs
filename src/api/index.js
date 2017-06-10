@@ -9,3 +9,9 @@ export const getGalleryByTag = (
   { sort = 'viral', date = 'week', page = 0 } = {}
 ) =>
   request('Get gallery', `https://api.imgur.com/3/gallery/t/${tag}/${sort}/${date}/${page}`, get)
+
+export const getItemInfo = id =>
+  request('Get item info', `https://api.imgur.com/3/gallery/${id}`, get)
+
+export const getComments = (id, { sortBy = 'best' } = {}) =>
+  request('Get comments', `https://api.imgur.com/3/gallery/${id}/comments/${sortBy}`, get)

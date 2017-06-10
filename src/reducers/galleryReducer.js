@@ -1,4 +1,5 @@
 import { getGalleryByTag } from '../api'
+import { addThumbs } from '../utils'
 
 export const FETCH_GALLERY_REQUEST = 'FETCH_GALLERY_REQUEST'
 export const FETCH_GALLERY_SUCCESS = 'FETCH_GALLERY_SUCCESS'
@@ -10,7 +11,7 @@ export const fetchGallery = () => (dispatch, getState) =>
 
     getGalleryByTag('polandball')
       .then(response => {
-        dispatch({ type: FETCH_GALLERY_SUCCESS, items: response.items })
+        dispatch({ type: FETCH_GALLERY_SUCCESS, items: addThumbs(response.items) })
         resolve()
       })
       .catch(error => {
