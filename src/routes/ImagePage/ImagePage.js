@@ -6,6 +6,7 @@ import moment from 'moment'
 // Store
 import { galleryItemActions } from '../../reducers/galleryItemReducer'
 // Components
+import { Link } from 'react-router-dom'
 import ImagePageItem from './ImagePageItem'
 import Tags from '../../components/Tags'
 import SocialButtons from '../../components/SocialButtons'
@@ -51,10 +52,16 @@ class ImagePage extends Component {
               <Typography type="headline" gutterBottom>
                 {item.title}
               </Typography>
-              <Typography type="subheading" gutterBottom>
-                {item.account_url} {moment(item.datetime, 'X').fromNow()}
-              </Typography>
-              <Div flex column alignItems="center">
+              <Div flex>
+                <Typography type="subheading">
+                  By{' '}
+                  <Link to={`/user/${this.props.galleryItem.item.account_url}`}>
+                    {item.account_url}
+                  </Link>{' '}
+                  created {moment(item.datetime, 'X').fromNow()}
+                </Typography>
+              </Div>
+              <Div flex column alignItems="center" style={{ marginTop: 16 }}>
                 {(item.images || [item])
                   .map(image => <ImagePageItem key={image.id} image={image} />)}
               </Div>

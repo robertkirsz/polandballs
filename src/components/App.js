@@ -11,7 +11,8 @@ const App = () =>
     <StyledApp>
       <Navbar />
       <Route exact path="/" component={GalleryPage} />
-      <Route path="/:id" component={ImagePage} />
+      <Route path="/image/:id" component={ImagePage} />
+      <Route path="/user/:id" component={GalleryPage} />
     </StyledApp>
   </Router>
 

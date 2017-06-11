@@ -1,4 +1,4 @@
-import { getGalleryByTag } from '../api'
+import { getGalleryByTag, getUserGallery } from '../api'
 import { addThumbs } from '../utils'
 
 export const FETCH_GALLERY_REQUEST = 'FETCH_GALLERY_REQUEST'
@@ -20,7 +20,25 @@ export const fetchGallery = () => (dispatch, getState) =>
       })
   })
 
-export const galleryActions = { fetchGallery }
+export const fetchUserGallery = id => (dispatch, getState) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: FETCH_GALLERY_REQUEST })
+
+    getUserGallery(id)
+      .then(items => {
+        dispatch({
+          type: FETCH_GALLERY_SUCCESS,
+          items: addThumbs(items.filter(item => !!item.tags.find(tag => tag.name === 'polandball')))
+        })
+        resolve()
+      })
+      .catch(error => {
+        dispatch({ type: FETCH_GALLERY_FAIL, error })
+        reject()
+      })
+  })
+
+export const galleryActions = { fetchGallery, fetchUserGallery }
 
 const initialState = {
   loading: false,

@@ -25,13 +25,13 @@ class GalleryPage extends Component {
   }
 
   componentWillMount () {
-    if (!this.props.gallery.loaded) {
-      this.props.galleryActions.fetchGallery()
-    }
+    const { match, galleryActions } = this.props
+      if (match.path === '/') galleryActions.fetchGallery()
+      if (match.path === '/user/:id') galleryActions.fetchUserGallery(match.params.id)
   }
 
   handleClick = item => {
-    this.props.history.push(`/${item.id}`)
+    this.props.history.push(`/image/${item.id}`)
   }
 
   render () {
