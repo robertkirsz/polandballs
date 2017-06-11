@@ -1,6 +1,9 @@
 {
   "name": "polandballs",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Polandball meme browser powered by Imgur API",
+  "author": "Robert Kirsz <robert.kirsz@gmail.com> (http://robertkirsz.pl/)",
+  "homepage": "https://polandballs-e473f.firebaseapp.com/",
   "private": true,
   "dependencies": {
     "material-ui": "next",
@@ -19,8 +22,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build"
   }
 }
