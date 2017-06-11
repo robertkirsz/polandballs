@@ -1,5 +1,7 @@
 import api from '../api'
 
+// ACTION TYPES
+
 export const FETCH_GALLERY_ITEM_REQUEST = 'FETCH_GALLERY_ITEM_REQUEST'
 export const FETCH_GALLERY_ITEM_SUCCESS = 'FETCH_GALLERY_ITEM_SUCCESS'
 export const FETCH_GALLERY_ITEM_FAIL = 'FETCH_GALLERY_ITEM_FAIL'
@@ -7,11 +9,14 @@ export const FETCH_COMMENTS_REQUEST = 'FETCH_COMMENTS_REQUEST'
 export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS'
 export const FETCH_COMMENTS_FAIL = 'FETCH_COMMENTS_FAIL'
 
+// ACTIONS
+
 export const fetchGalleryItem = id => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     dispatch({ type: FETCH_GALLERY_ITEM_REQUEST })
 
-    api.getItemInfo(id)
+    api
+      .getItemInfo(id)
       .then(item => {
         dispatch({ type: FETCH_GALLERY_ITEM_SUCCESS, item })
         resolve()
@@ -26,7 +31,8 @@ export const fetchComments = id => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     dispatch({ type: FETCH_COMMENTS_REQUEST })
 
-    api.getComments(id)
+    api
+      .getComments(id)
       .then(comments => {
         dispatch({ type: FETCH_COMMENTS_SUCCESS, comments })
         resolve()
@@ -39,6 +45,47 @@ export const fetchComments = id => (dispatch, getState) =>
 
 export const galleryItemActions = { fetchGalleryItem, fetchComments }
 
+// REDUCER
+
+const ACTION_HANDLERS = {
+  [FETCH_GALLERY_ITEM_REQUEST]: (state, action) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null
+  }),
+  [FETCH_GALLERY_ITEM_SUCCESS]: (state, action) => ({
+    ...state,
+    loading: false,
+    loaded: true,
+    item: action.item
+  }),
+  [FETCH_GALLERY_ITEM_FAIL]: (state, action) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: action.error
+  }),
+  [FETCH_COMMENTS_REQUEST]: (state, action) => ({
+    ...state,
+    commentsLoading: true,
+    commentsLoaded: false,
+    commentsError: null
+  }),
+  [FETCH_COMMENTS_SUCCESS]: (state, action) => ({
+    ...state,
+    commentsLoading: false,
+    commentsLoaded: true,
+    comments: action.comments
+  }),
+  [FETCH_COMMENTS_FAIL]: (state, action) => ({
+    ...state,
+    commentsLoading: false,
+    commentsLoaded: false,
+    commentsError: action.error
+  })
+}
+
 const initialState = {
   item: {},
   comments: [],
@@ -50,26 +97,8 @@ const initialState = {
   commentsError: null
 }
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case FETCH_GALLERY_ITEM_REQUEST:
-      return { ...state, loading: true, loaded: false, error: null }
-    case FETCH_GALLERY_ITEM_SUCCESS:
-      return { ...state, loading: false, loaded: true, item: action.item }
-    case FETCH_GALLERY_ITEM_FAIL:
-      return { ...state, loading: false, loaded: false, error: action.error }
-    case FETCH_COMMENTS_REQUEST:
-      return { ...state, commentsLoading: true, commentsLoaded: false, commentsError: null }
-    case FETCH_COMMENTS_SUCCESS:
-      return { ...state, commentsLoading: false, commentsLoaded: true, comments: action.comments }
-    case FETCH_COMMENTS_FAIL:
-      return {
-        ...state,
-        commentsLoading: false,
-        commentsLoaded: false,
-        commentsError: action.error
-      }
-    default:
-      return state
-  }
+export default function (state = initialState, action) {
+  const handler = ACTION_HANDLERS[action.type]
+
+  return handler ? handler(state, action) : state
 }
