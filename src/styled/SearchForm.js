@@ -14,10 +14,10 @@ const SearchForm = styled(Paper)`
     width: 100%;
     margin-left: 4px;
     padding: 4px;
-    border: none;
+    border: 1px solid transparent;
     border-radius: 4px;
     outline: none;
-    &:focus { border: 1px solid #ccc; }
+    &:focus { border-color: #ccc; }
   }
 `
 
