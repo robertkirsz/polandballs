@@ -71,7 +71,7 @@ class GalleryPage extends Component {
             )}
           </Grid>}
         <Spinner show={appending} />
-        {isMainPage && loaded &&
+        {isMainPage && loaded && !appending &&
           <Button onClick={this.addMoreItems} style={{ alignSelf: 'center' }}>Show more</Button>}
       </StyledGalleryPage>
     )
