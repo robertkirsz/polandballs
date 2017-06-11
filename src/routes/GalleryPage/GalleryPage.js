@@ -8,7 +8,7 @@ import { galleryActions } from '../../reducers/galleryReducer'
 import GalleryPageItem from './GalleryPageItem'
 import Spinner from '../../components/Spinner'
 // Layout
-import Grid from 'material-ui/Grid'
+import Grid from '../../styled/Grid'
 import StyledGalleryPage from '../../styled/GalleryPage'
 
 const mapStateToProps = ({ gallery }) => ({ gallery })
@@ -41,7 +41,7 @@ class GalleryPage extends Component {
       <StyledGalleryPage>
         <Spinner show={loading} />
         {loaded &&
-          <Grid container justify="center" gutter={16}>
+          <Grid>
             {items.map(item =>
               <GalleryPageItem key={item.id} item={item} onClick={this.handleClick} />
             )}
