@@ -1,4 +1,4 @@
-import { getItemInfo, getComments } from '../api'
+import api from '../api'
 
 export const FETCH_GALLERY_ITEM_REQUEST = 'FETCH_GALLERY_ITEM_REQUEST'
 export const FETCH_GALLERY_ITEM_SUCCESS = 'FETCH_GALLERY_ITEM_SUCCESS'
@@ -11,7 +11,7 @@ export const fetchGalleryItem = id => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     dispatch({ type: FETCH_GALLERY_ITEM_REQUEST })
 
-    getItemInfo(id)
+    api.getItemInfo(id)
       .then(item => {
         dispatch({ type: FETCH_GALLERY_ITEM_SUCCESS, item })
         resolve()
@@ -26,7 +26,7 @@ export const fetchComments = id => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     dispatch({ type: FETCH_COMMENTS_REQUEST })
 
-    getComments(id)
+    api.getComments(id)
       .then(comments => {
         dispatch({ type: FETCH_COMMENTS_SUCCESS, comments })
         resolve()
