@@ -7,6 +7,8 @@ import { galleryActions } from '../../reducers/galleryReducer'
 // Components
 import GalleryPageItem from './GalleryPageItem'
 import Spinner from '../../components/Spinner'
+import Search from '../../components/Search'
+import NoResults from '../../components/NoResults'
 // Layout
 import Grid from '../../styled/Grid'
 import StyledGalleryPage from '../../styled/GalleryPage'
@@ -26,8 +28,17 @@ class GalleryPage extends Component {
 
   componentWillMount () {
     const { match, galleryActions } = this.props
-    if (match.path === '/') galleryActions.fetchGallery()
+    if (match.path === '/') galleryActions.fetchGallery('polandball')
     if (match.path === '/user/:id') galleryActions.fetchUserGallery(match.params.id)
+    if (match.path === '/search/:query') {
+      galleryActions.searchGallery(match.params.query)
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.match.params.query !== nextProps.match.params.query) {
+      this.props.galleryActions.searchGallery(nextProps.match.params.query)
+    }
   }
 
   handleClick = item => {
@@ -36,10 +47,15 @@ class GalleryPage extends Component {
 
   render () {
     const { loading, loaded, items } = this.props.gallery
+    const isSearchPage = this.props.match.path === '/search/:query'
+    const isUserPage = this.props.match.path === '/user/:id'
+    const noResults = isSearchPage && loaded && !items.length
 
     return (
       <StyledGalleryPage>
+        {!isUserPage && <Search />}
         <Spinner show={loading} />
+        {noResults && <NoResults />}
         {loaded &&
           <Grid>
             {items.map(item =>

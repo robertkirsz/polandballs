@@ -3,8 +3,8 @@ import React from 'react'
 import List from '../styled/List'
 import SocialButton from '../styled/SocialButton'
 // Icons
-import FacebookIcon from '../icons/facebook.svg'
-import TwitterIcon from '../icons/twitter.svg'
+import FacebookIcon from '../assets/facebook.svg'
+import TwitterIcon from '../assets/twitter.svg'
 
 const shareToFacebook = () => {
   window.open(`https://www.facebook.com/sharer/sharer.php?url=${window.location.href}`, '_blank')

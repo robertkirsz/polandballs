@@ -13,6 +13,7 @@ const App = () =>
       <Route exact path="/" component={GalleryPage} />
       <Route path="/image/:id" component={ImagePage} />
       <Route path="/user/:id" component={GalleryPage} />
+      <Route path="/search/:query" component={GalleryPage} />
     </StyledApp>
   </Router>
 

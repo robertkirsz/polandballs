@@ -23,3 +23,6 @@ export const request = (name, url, options) =>
         reject(error.message)
       })
   })
+
+export const onlyPolandballs = items =>
+  items.filter(item => !!item.tags.find(tag => tag.name === 'polandball'))

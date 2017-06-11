@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../icons/logo.png'
+import Logo from '../assets/polandball.png'
 // Components
 import { Link } from 'react-router-dom'
 // Layout

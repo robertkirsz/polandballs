@@ -1,5 +1,5 @@
 import api from '../api'
-import { addThumbs } from '../utils'
+import { addThumbs, onlyPolandballs } from '../utils'
 
 export const FETCH_GALLERY_REQUEST = 'FETCH_GALLERY_REQUEST'
 export const FETCH_GALLERY_SUCCESS = 'FETCH_GALLERY_SUCCESS'
@@ -12,7 +12,10 @@ export const fetchGallery = tag => (dispatch, getState) =>
     api
       .getGalleryByTag(tag)
       .then(response => {
-        dispatch({ type: FETCH_GALLERY_SUCCESS, items: addThumbs(response.items) })
+        dispatch({
+          type: FETCH_GALLERY_SUCCESS,
+          items: addThumbs(response.items)
+        })
         resolve()
       })
       .catch(error => {
@@ -30,7 +33,7 @@ export const fetchUserGallery = id => (dispatch, getState) =>
       .then(items => {
         dispatch({
           type: FETCH_GALLERY_SUCCESS,
-          items: addThumbs(items.filter(item => !!item.tags.find(tag => tag.name === 'polandball')))
+          items: addThumbs(onlyPolandballs(items))
         })
         resolve()
       })
@@ -44,19 +47,19 @@ export const searchGallery = query => (dispatch, getState) =>
   new Promise((resolve, reject) => {
     dispatch({ type: FETCH_GALLERY_REQUEST })
 
-    api.searchGallery(query).then(items => {
-      dispatch({
-        type: FETCH_GALLERY_SUCCESS,
-        items: addThumbs(
-          items.filter(item => !!item.tags.find(tag => tag.name === 'polandball'))
-        )
+    api
+      .searchGallery(query)
+      .then(items => {
+        dispatch({
+          type: FETCH_GALLERY_SUCCESS,
+          items: addThumbs(onlyPolandballs(items))
+        })
+        resolve()
       })
-      resolve()
-    })
-    .catch(error => {
-      dispatch({ type: FETCH_GALLERY_FAIL, error })
-      reject()
-    })
+      .catch(error => {
+        dispatch({ type: FETCH_GALLERY_FAIL, error })
+        reject()
+      })
   })
 
 export const galleryActions = { fetchGallery, fetchUserGallery, searchGallery }

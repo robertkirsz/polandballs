@@ -6,7 +6,8 @@ const GalleryPage = styled.div`
   flex: 1;
   width: 100%;
   max-width: 1440px;
-  margin: 80px auto 32px;
+  margin: 56px auto 32px;
+  @media (min-width: 600px) { margin-top: 64px; }
 `
 
 export default GalleryPage
