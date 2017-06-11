@@ -10,6 +10,7 @@ import Spinner from '../../components/Spinner'
 import Search from '../../components/Search'
 import NoResults from '../../components/NoResults'
 // Layout
+import Button from 'material-ui/Button'
 import Grid from '../../styled/Grid'
 import StyledGalleryPage from '../../styled/GalleryPage'
 
@@ -45,8 +46,12 @@ class GalleryPage extends Component {
     this.props.history.push(`/image/${item.id}`)
   }
 
+  addMoreItems = () => {
+    this.props.galleryActions.addMoreItems()
+  }
+
   render () {
-    const { loading, loaded, items } = this.props.gallery
+    const { loading, loaded, appending, items } = this.props.gallery
     const isSearchPage = this.props.match.path === '/search/:query'
     const isUserPage = this.props.match.path === '/user/:id'
     const noResults = isSearchPage && loaded && !items.length
@@ -62,6 +67,9 @@ class GalleryPage extends Component {
               <GalleryPageItem key={item.id} item={item} onClick={this.handleClick} />
             )}
           </Grid>}
+        <Spinner show={appending} />
+        {loaded &&
+          <Button onClick={this.addMoreItems} style={{ alignSelf: 'center' }}>Show more</Button>}
       </StyledGalleryPage>
     )
   }
