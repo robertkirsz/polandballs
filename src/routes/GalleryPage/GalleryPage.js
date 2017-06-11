@@ -29,16 +29,18 @@ class GalleryPage extends Component {
 
   componentWillMount () {
     const { match, galleryActions } = this.props
-    if (match.path === '/') galleryActions.fetchGallery('polandball')
     if (match.path === '/user/:id') galleryActions.fetchUserGallery(match.params.id)
-    if (match.path === '/search/:query') {
-      galleryActions.searchGallery(match.params.query)
-    }
+    else if (match.path === '/search/:query') galleryActions.searchGallery(match.params.query)
+    else galleryActions.fetchGallery('polandball')
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.match.params.query !== nextProps.match.params.query) {
       this.props.galleryActions.searchGallery(nextProps.match.params.query)
+    }
+
+    if (this.props.match.path !== '/' && nextProps.match.path === '/') {
+      this.props.galleryActions.fetchGallery(nextProps.gallery.tag)
     }
   }
 

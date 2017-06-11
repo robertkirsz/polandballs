@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 // Components
 import Navbar from './Navbar'
 import { GalleryPage, ImagePage } from '../routes'
@@ -10,10 +10,13 @@ const App = () =>
   <Router>
     <StyledApp>
       <Navbar />
-      <Route exact path="/" component={GalleryPage} />
-      <Route path="/image/:id" component={ImagePage} />
-      <Route path="/user/:id" component={GalleryPage} />
-      <Route path="/search/:query" component={GalleryPage} />
+      <Switch>
+        <Route exact path="/" component={GalleryPage} />
+        <Route path="/image/:id" component={ImagePage} />
+        <Route path="/user/:id" component={GalleryPage} />
+        <Route path="/search/:query" component={GalleryPage} />
+        <Redirect to="/" />
+      </Switch>
     </StyledApp>
   </Router>
 
