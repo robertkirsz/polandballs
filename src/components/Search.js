@@ -41,6 +41,7 @@ class Search extends Component {
         <input
           value={this.state.query}
           onChange={this.handleChange}
+          aria-label="Search"
           ref={input => {
             this.textInput = input
           }}

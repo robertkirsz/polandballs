@@ -40,6 +40,7 @@ class CommentsList extends Component {
   getNumberOfComments = comments => {
     let counter = 0
 
+    // Get deep into the array and count all comments
     const count = array => {
       array.forEach(item => {
         counter += 1

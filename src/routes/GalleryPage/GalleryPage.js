@@ -29,16 +29,19 @@ class GalleryPage extends Component {
 
   componentWillMount () {
     const { match, galleryActions } = this.props
+    // Since we use this component on thee different routes,
+    // we need to figure out what data to fetch
     if (match.path === '/user/:id') galleryActions.fetchUserGallery(match.params.id)
     else if (match.path === '/search/:query') galleryActions.searchGallery(match.params.query)
     else galleryActions.fetchGallery('polandball')
   }
 
   componentWillReceiveProps (nextProps) {
+    // Fetch data when search params change
     if (this.props.match.params.query !== nextProps.match.params.query) {
       this.props.galleryActions.searchGallery(nextProps.match.params.query)
     }
-
+    // Re-fetch data when returning to the home page from the same component
     if (this.props.match.path !== '/' && nextProps.match.path === '/') {
       this.props.galleryActions.fetchGallery(nextProps.gallery.tag)
     }
