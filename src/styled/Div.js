@@ -34,9 +34,17 @@ export default styled.div`
     }
   }}
 
-${'' /* Position */}
+  ${'' /* Position */}
   ${({ absolute, relative }) => {
     if (absolute) return css`position: absolute;`
     if (relative) return css`position: relative;`
+  }}
+
+  ${'' /* Misc */}
+  ${({ spread }) => {
+    if (spread) return css`
+      justify-content: space-between;
+      align-items: center;
+    `
   }}
 `

@@ -62,7 +62,7 @@ class ImagePage extends Component {
                 {(item.images || [item])
                   .map(image => <ImagePageItem key={image.id} image={image} />)}
               </Div>
-              <Div flex wrap justifyContent="space-between" alignItems="center">
+              <Div flex wrap spread>
                 <Stats>
                   <Icon>remove_red_eye</Icon>{item.views}
                   <Icon>grade</Icon>{item.points}

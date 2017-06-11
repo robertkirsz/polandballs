@@ -64,7 +64,7 @@ class CommentsList extends Component {
         <Spinner show={commentsLoading} />
         {commentsLoaded &&
           <Div flex column>
-            <Div flex justifyContent="space-between" alignItems="center" style={{ marginTop: 16 }}>
+            <Div flex spread style={{ marginTop: 16 }}>
               <Typography type="title">
                 {this.getNumberOfComments(comments)}
               </Typography>
