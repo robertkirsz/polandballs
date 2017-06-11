@@ -45,7 +45,7 @@ export default class GalleryPageItem extends Component {
           </CardContent>
           <CardActions>
             <Button compact primary style={{ marginLeft: 4 }} onClick={this.handleClick}>
-              See More
+              {item.is_album ? 'See album' : 'See image'}
             </Button>
             <Stats style={{ margin: '0 6px 0 auto' }}>
               <Icon>remove_red_eye</Icon>{item.views}
