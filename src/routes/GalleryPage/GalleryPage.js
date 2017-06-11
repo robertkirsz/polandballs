@@ -6,10 +6,10 @@ import { bindActionCreators } from 'redux'
 import { galleryActions } from '../../reducers/galleryReducer'
 // Components
 import GalleryPageItem from './GalleryPageItem'
-import StyledGalleryPage from '../../styled/GalleryPage'
+import Spinner from '../../components/Spinner'
 // Layout
-import { CircularProgress } from 'material-ui/Progress'
 import Grid from 'material-ui/Grid'
+import StyledGalleryPage from '../../styled/GalleryPage'
 
 const mapStateToProps = ({ gallery }) => ({ gallery })
 
@@ -26,8 +26,8 @@ class GalleryPage extends Component {
 
   componentWillMount () {
     const { match, galleryActions } = this.props
-      if (match.path === '/') galleryActions.fetchGallery()
-      if (match.path === '/user/:id') galleryActions.fetchUserGallery(match.params.id)
+    if (match.path === '/') galleryActions.fetchGallery()
+    if (match.path === '/user/:id') galleryActions.fetchUserGallery(match.params.id)
   }
 
   handleClick = item => {
@@ -39,10 +39,7 @@ class GalleryPage extends Component {
 
     return (
       <StyledGalleryPage>
-        {loading &&
-          <CircularProgress
-            style={{ alignSelf: 'center', width: 60, height: 60, marginTop: 24 }}
-          />}
+        <Spinner show={loading} />
         {loaded &&
           <Grid container justify="center" gutter={16}>
             {items.map(item =>

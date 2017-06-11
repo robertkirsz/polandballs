@@ -8,11 +8,11 @@ import { galleryItemActions } from '../../reducers/galleryItemReducer'
 // Components
 import { Link } from 'react-router-dom'
 import ImagePageItem from './ImagePageItem'
+import Spinner from '../../components/Spinner'
 import Tags from '../../components/Tags'
 import SocialButtons from '../../components/SocialButtons'
 import CommentsList from '../../components/CommentsList'
 // Layout
-import { CircularProgress } from 'material-ui/Progress'
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
 import Icon from 'material-ui/Icon'
@@ -42,10 +42,7 @@ class ImagePage extends Component {
 
     return (
       <StyledImagePage>
-        {loading &&
-          <CircularProgress
-            style={{ alignSelf: 'center', width: 60, height: 60, marginTop: 24 }}
-          />}
+        <Spinner show={loading} />
         {loaded &&
           <Div>
             <Paper style={{ padding: 16 }}>

@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux'
 import { galleryItemActions } from '../reducers/galleryItemReducer'
 // Components
 import Comment from './Comment'
+import Spinner from './Spinner'
 // Layout
-import { CircularProgress } from 'material-ui/Progress'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import Div from '../styled/Div'
@@ -61,10 +61,7 @@ class CommentsList extends Component {
 
     return (
       <Div flex column>
-        {commentsLoading &&
-          <CircularProgress
-            style={{ alignSelf: 'center', width: 40, height: 40, marginTop: 24 }}
-          />}
+        <Spinner show={commentsLoading} />
         {commentsLoaded &&
           <Div flex column>
             <Div flex justifyContent="space-between" alignItems="center" style={{ marginTop: 16 }}>
