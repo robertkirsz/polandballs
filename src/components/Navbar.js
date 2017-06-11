@@ -1,15 +1,18 @@
 import React from 'react'
+import Logo from '../icons/logo.png'
+// Components
+import { Link } from 'react-router-dom'
 // Layout
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
+import Avatar from 'material-ui/Avatar'
 
 const Navbar = () =>
   <AppBar>
     <Toolbar>
-      <Typography type="title" colorInherit>
-        Polandballs
-      </Typography>
+      <Link to="/" style={{ margin: 'auto' }}>
+        <Avatar alt="Polandball logo" src={Logo} />
+      </Link>
     </Toolbar>
   </AppBar>
 
