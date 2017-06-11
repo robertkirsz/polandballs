@@ -2,13 +2,17 @@ import styled from 'styled-components'
 
 const Stats = styled.div`
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+`
+
+export const StatItem = styled.span`
+  display: flex;
   align-items: center;
+  margin-right: 0.6em;
 
   .material-icons {
     font-size: inherit;
-    margin: 0 0.2em 0 0.6em;
-    &:first-child { margin-left: 0; }
+    margin-right: 0.2em;
   }
 `
 

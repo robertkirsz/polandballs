@@ -18,7 +18,7 @@ import Typography from 'material-ui/Typography'
 import Icon from 'material-ui/Icon'
 import StyledImagePage from '../../styled/ImagePage'
 import Div from '../../styled/Div'
-import Stats from '../../styled/Stats'
+import Stats, { StatItem } from '../../styled/Stats'
 
 const mapStateToProps = ({ galleryItem }) => ({ galleryItem })
 
@@ -64,8 +64,12 @@ class ImagePage extends Component {
               </Div>
               <Div flex wrap spread>
                 <Stats>
-                  <Icon>remove_red_eye</Icon>{item.views}
-                  <Icon>grade</Icon>{item.points}
+                  <StatItem>
+                    <Icon>remove_red_eye</Icon>{item.views}
+                  </StatItem>
+                  <StatItem>
+                    <Icon>grade</Icon>{item.points}
+                  </StatItem>
                 </Stats>
                 <SocialButtons />
                 <Tags tags={item.tags} />

@@ -9,7 +9,7 @@ import Icon from 'material-ui/Icon'
 import Grid from 'material-ui/Grid'
 import AlbumBadge from '../../styled/AlbumBadge'
 import CardCover from '../../styled/CardCover'
-import Stats from '../../styled/Stats'
+import Stats, { StatItem } from '../../styled/Stats'
 
 export default class GalleryPageItem extends Component {
   static propTypes = {
@@ -48,8 +48,12 @@ export default class GalleryPageItem extends Component {
               {item.is_album ? 'See album' : 'See image'}
             </Button>
             <Stats style={{ margin: '0 6px 0 auto' }}>
-              <Icon>remove_red_eye</Icon>{item.views}
-              <Icon>grade</Icon>{item.points}
+              <StatItem>
+                <Icon>remove_red_eye</Icon>{item.views}
+              </StatItem>
+              <StatItem>
+                <Icon>grade</Icon>{item.points}
+              </StatItem>
             </Stats>
           </CardActions>
         </Card>

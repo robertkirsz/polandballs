@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Icon from 'material-ui/Icon'
 import List from '../styled/List'
-import Stats from '../styled/Stats'
+import Stats, { StatItem } from '../styled/Stats'
 import StyledComment from '../styled/Comment'
 
 export default class Comment extends Component {
@@ -47,16 +47,19 @@ export default class Comment extends Component {
         <Paper className="content">
           <List className="header">
             <Stats>
-              <Icon>person</Icon>{author}
-              <Icon>access_time</Icon>{moment(datetime, 'X').fromNow()}
-              <Icon>grade</Icon>{points}
+              <StatItem>
+                <Icon>person</Icon>{author}
+              </StatItem>
+              <StatItem>
+                <Icon>access_time</Icon>{moment(datetime, 'X').fromNow()}
+              </StatItem>
+              <StatItem>
+                <Icon>grade</Icon>{points}
+              </StatItem>
             </Stats>
           </List>
           {children.length > 0 &&
-            <IconButton
-              onClick={this.toggleChildComments}
-              style={{ position: 'absolute', top: 0, right: 0 }}
-            >
+            <IconButton onClick={this.toggleChildComments}>
               <Icon>{showChildComments ? 'expand_less' : 'expand_more'}</Icon>
             </IconButton>}
           <Typography className="message">{comment}</Typography>
