@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import Masonry from 'masonry-layout'
+import imagesLoaded from 'imagesloaded'
 // Store
 import { galleryActions } from '../../reducers/galleryReducer'
 // Components
@@ -11,7 +13,6 @@ import Search from '../../components/Search'
 import NoResults from '../../components/NoResults'
 // Layout
 import Button from 'material-ui/Button'
-import Grid from 'material-ui/Grid'
 import StyledGalleryPage from '../../styled/GalleryPage'
 
 const mapStateToProps = ({ gallery }) => ({ gallery })
@@ -47,6 +48,31 @@ class GalleryPage extends Component {
     }
   }
 
+  componentDidUpdate (prevProps) {
+    // Update layout when new elements appear
+    if (
+      (!prevProps.gallery.loaded && this.props.gallery.loaded) ||
+      (!prevProps.gallery.appended && this.props.gallery.appended)
+    ) {
+      this.initializeMasonry()
+    }
+  }
+
+  initializeMasonry = () => {
+    const elem = document.querySelector('.grid')
+
+    const msnry = new Masonry(elem, {
+      columnWidth: '.grid-sizer',
+      itemSelector: '.grid-item',
+      percentPosition: true,
+      transitionDuration: 0
+    })
+
+    const imgLoad = imagesLoaded(elem)
+
+    imgLoad.on('progress', () => msnry.layout())
+  }
+
   handleClick = item => {
     this.props.history.push(`/image/${item.id}`)
   }
@@ -68,11 +94,12 @@ class GalleryPage extends Component {
         <Spinner show={loading} />
         {noResults && <NoResults />}
         {loaded &&
-          <Grid container gutter={16} style={{ margin: '8px -8px' }}>
+          <div className="grid">
+            <div className="grid-sizer" />
             {items.map(item =>
               <GalleryPageItem key={item.id} item={item} onClick={this.handleClick} />
             )}
-          </Grid>}
+          </div>}
         <Spinner show={appending} />
         {isMainPage && loaded && !appending &&
           <Button onClick={this.addMoreItems} style={{ alignSelf: 'center' }}>Show more</Button>}
