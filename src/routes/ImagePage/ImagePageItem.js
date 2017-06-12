@@ -4,7 +4,7 @@ import StyledImagePageItem from '../../styled/ImagePageItem'
 
 const ImagePageItem = ({ image }) =>
   <StyledImagePageItem>
-    <img src={image.link} alt="" />
+    <img src={image.link.replace('http://', 'https://')} alt="" />
     <figcaption>{image.description}</figcaption>
   </StyledImagePageItem>
 
