@@ -1,12 +1,13 @@
 {
   "name": "polandballs",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Polandball meme browser powered by Imgur API",
   "author": "Robert Kirsz <robert.kirsz@gmail.com> (http://robertkirsz.pl/)",
   "homepage": "https://polandballs-e473f.firebaseapp.com/",
   "private": true,
   "dependencies": {
     "imagesloaded": "^4.1.2",
+    "lodash": "^4.17.4",
     "masonry-layout": "^4.2.0",
     "material-ui": "next",
     "moment": "^2.18.1",

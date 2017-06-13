@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Masonry from 'masonry-layout'
 import imagesLoaded from 'imagesloaded'
+import _debounce from 'lodash/debounce'
 // Store
 import { galleryActions } from '../../reducers/galleryReducer'
 // Components
@@ -12,7 +13,6 @@ import Spinner from '../../components/Spinner'
 import Search from '../../components/Search'
 import NoResults from '../../components/NoResults'
 // Layout
-import Button from 'material-ui/Button'
 import StyledGalleryPage from '../../styled/GalleryPage'
 
 const mapStateToProps = ({ gallery }) => ({ gallery })
@@ -28,13 +28,32 @@ class GalleryPage extends Component {
     galleryActions: PropTypes.object.isRequired
   }
 
+  isPhone = window.matchMedia('(max-width: 767px)').matches
+  isTablet = window.matchMedia('(min-width: 768px) and (max-width: 1023px)').matches
+  isDesktop = window.matchMedia('(min-width: 1024px)').matches
+
+  state = {
+    visibleItems: null
+  }
+
+  debouncedAddMoreItems = _debounce(state => {
+    this.detectScrollToBottom()
+  }, 100)
+
   componentWillMount () {
+    if (this.isPhone) this.setState({ visibleItems: 5 })
+    if (this.isTablet) this.setState({ visibleItems: 8 })
+
     const { match, galleryActions } = this.props
     // Since we use this component on thee different routes,
     // we need to figure out what data to fetch
     if (match.path === '/user/:id') galleryActions.fetchUserGallery(match.params.id)
     else if (match.path === '/search/:query') galleryActions.searchGallery(match.params.query)
     else galleryActions.fetchGallery('polandball')
+  }
+
+  componentDidMount () {
+    window.addEventListener('scroll', this.debouncedAddMoreItems)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -48,13 +67,38 @@ class GalleryPage extends Component {
     }
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate (prevProps, prevState) {
     // Update layout when new elements appear
     if (
       (!prevProps.gallery.loaded && this.props.gallery.loaded) ||
-      (!prevProps.gallery.appended && this.props.gallery.appended)
+      (!prevProps.gallery.appended && this.props.gallery.appended) ||
+      this.state.visibleItems !== prevState.visibleItems
     ) {
       this.initializeMasonry()
+    }
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this.debouncedAddMoreItems)
+  }
+
+  detectScrollToBottom = () => {
+    const windowHeight = window.outerHeight
+    const bodyHeight = document.querySelector('body').getBoundingClientRect().height
+    const scrollPosition = window.scrollY
+
+    // When user reaches the bottom of the screen, add more items to the page
+    if (!this.props.gallery.appending && scrollPosition + windowHeight > bodyHeight - 200) {
+      let visibleItems = this.state.visibleItems
+      if (this.isMobile) visibleItems += 5
+      if (this.isTablet) visibleItems += 8
+
+      // If we've shown all the items, fetch some more
+      if (this.isDesktop || visibleItems >= this.props.gallery.items.length) {
+        this.props.galleryActions.addMoreItems()
+      }
+
+      if (!this.isDesktop) this.setState({ visibleItems })
     }
   }
 
@@ -77,16 +121,13 @@ class GalleryPage extends Component {
     this.props.history.push(`/image/${item.id}`)
   }
 
-  addMoreItems = () => {
-    this.props.galleryActions.addMoreItems()
-  }
-
   render () {
     const { loading, loaded, appending, items } = this.props.gallery
-    const isMainPage = this.props.match.path === '/'
     const isSearchPage = this.props.match.path === '/search/:query'
     const isUserPage = this.props.match.path === '/user/:id'
     const noResults = isSearchPage && loaded && !items.length
+
+    const _items = this.isDesktop ? items : items.slice(0, this.state.visibleItems)
 
     return (
       <StyledGalleryPage>
@@ -96,13 +137,11 @@ class GalleryPage extends Component {
         {loaded &&
           <div className="grid">
             <div className="grid-sizer" />
-            {items.map(item =>
+            {_items.map(item =>
               <GalleryPageItem key={item.id} item={item} onClick={this.handleClick} />
             )}
           </div>}
         <Spinner show={appending} />
-        {isMainPage && loaded && !appending &&
-          <Button onClick={this.addMoreItems} style={{ alignSelf: 'center' }}>Show more</Button>}
       </StyledGalleryPage>
     )
   }
