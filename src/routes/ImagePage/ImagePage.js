@@ -4,14 +4,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
 // Store
-import { galleryItemActions } from '../../reducers/galleryItemReducer'
+import { galleryItemActions } from '../../store'
 // Components
 import { Link } from 'react-router-dom'
 import ImagePageItem from './ImagePageItem'
-import Spinner from '../../components/Spinner'
-import Tags from '../../components/Tags'
-import SocialButtons from '../../components/SocialButtons'
-import CommentsList from '../../components/CommentsList'
+import { Spinner, Tags, SocialButtons, CommentsList } from '../../components'
 // Layout
 import Paper from 'material-ui/Paper'
 import Typography from 'material-ui/Typography'
@@ -45,7 +42,7 @@ class ImagePage extends Component {
         <Spinner show={loading} />
         {loaded &&
           <Div>
-            <Paper style={{ padding: 16 }}>
+            <Paper className="content">
               <Typography type="headline" gutterBottom>
                 {item.title}
               </Typography>

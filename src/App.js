@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 // Components
-import Navbar from './Navbar'
-import { GalleryPage, ImagePage } from '../routes'
+import { Navbar } from './components'
+import { GalleryPage, ImagePage } from './routes'
 // Layout
-import StyledApp from '../styled/App'
+import StyledApp from './styled/App'
 
 const App = () =>
   <Router>

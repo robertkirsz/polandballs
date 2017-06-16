@@ -43,7 +43,7 @@ export const fetchComments = id => (dispatch, getState) =>
       })
   })
 
-export const galleryItemActions = { fetchGalleryItem, fetchComments }
+export const actions = { fetchGalleryItem, fetchComments }
 
 // REDUCER
 
@@ -97,8 +97,6 @@ const initialState = {
   commentsError: null
 }
 
-export default function (state = initialState, action) {
-  const handler = ACTION_HANDLERS[action.type]
-
-  return handler ? handler(state, action) : state
-}
+export default (state = initialState, action) => ACTION_HANDLERS[action.type]
+  ? ACTION_HANDLERS[action.type](state, action)
+  : state

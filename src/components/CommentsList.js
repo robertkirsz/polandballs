@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 // Store
-import { galleryItemActions } from '../reducers/galleryItemReducer'
+import { galleryItemActions } from '../store'
 // Components
 import Comment from './Comment'
 import Spinner from './Spinner'

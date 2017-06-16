@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Icon from 'material-ui/Icon'
+import StyledGalleryPageItem from '../../styled/GalleryPageItem'
 import AlbumBadge from '../../styled/AlbumBadge'
 import CardCover from '../../styled/CardCover'
 import Stats, { StatItem } from '../../styled/Stats'
@@ -24,7 +25,7 @@ export default class GalleryPageItem extends Component {
     const { item } = this.props
 
     return (
-      <div className="grid-item">
+      <StyledGalleryPageItem>
         <Card>
           <CardCover onClick={this.handleClick}>
             <img src={item.thumb} alt="" />
@@ -56,7 +57,7 @@ export default class GalleryPageItem extends Component {
             </Stats>
           </CardActions>
         </Card>
-      </div>
+      </StyledGalleryPageItem>
     )
   }
 }

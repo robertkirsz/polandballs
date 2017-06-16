@@ -92,7 +92,7 @@ export const addMoreItems = () => (dispatch, getState) =>
       })
   })
 
-export const galleryActions = {
+export const actions = {
   fetchGallery,
   fetchUserGallery,
   searchGallery,
@@ -154,8 +154,6 @@ const initialState = {
   appendError: null
 }
 
-export default function (state = initialState, action) {
-  const handler = ACTION_HANDLERS[action.type]
-
-  return handler ? handler(state, action) : state
-}
+export default (state = initialState, action) => ACTION_HANDLERS[action.type]
+  ? ACTION_HANDLERS[action.type](state, action)
+  : state

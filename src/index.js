@@ -2,17 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider as StoreProvider } from 'react-redux'
 import { MuiThemeProvider } from 'material-ui/styles'
-import configureStore from './store/configureStore'
+// Store
+import createStore from './store'
+// Service worker
 import registerServiceWorker from './registerServiceWorker'
 // Components
-import App from './components/App'
+import App from './App'
 // Layout
 import './index.css'
 
-const store = configureStore()
-
 ReactDOM.render(
-  <StoreProvider store={store}>
+  <StoreProvider store={createStore()}>
     <MuiThemeProvider>
       <App />
     </MuiThemeProvider>
