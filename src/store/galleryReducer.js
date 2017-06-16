@@ -92,7 +92,7 @@ export const addMoreItems = () => (dispatch, getState) =>
       })
   })
 
-export const galleryActions = {
+export const actions = {
   fetchGallery,
   fetchUserGallery,
   searchGallery,

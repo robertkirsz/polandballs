@@ -6,12 +6,10 @@ import Masonry from 'masonry-layout'
 import imagesLoaded from 'imagesloaded'
 import _debounce from 'lodash/debounce'
 // Store
-import { galleryActions } from '../../reducers/galleryReducer'
+import { galleryActions } from '../../store'
 // Components
 import GalleryPageItem from './GalleryPageItem'
-import Spinner from '../../components/Spinner'
-import Search from '../../components/Search'
-import NoResults from '../../components/NoResults'
+import { Spinner, Search, NoResults } from '../../components'
 // Layout
 import StyledGalleryPage from '../../styled/GalleryPage'
 

@@ -43,7 +43,7 @@ export const fetchComments = id => (dispatch, getState) =>
       })
   })
 
-export const galleryItemActions = { fetchGalleryItem, fetchComments }
+export const actions = { fetchGalleryItem, fetchComments }
 
 // REDUCER
 
