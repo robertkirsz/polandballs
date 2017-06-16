@@ -42,7 +42,7 @@ class ImagePage extends Component {
         <Spinner show={loading} />
         {loaded &&
           <Div>
-            <Paper style={{ padding: 16 }}>
+            <Paper className="content">
               <Typography type="headline" gutterBottom>
                 {item.title}
               </Typography>
